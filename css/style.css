@@ -552,7 +552,8 @@ body {
 .reason-text {
     font-size: 18px;
     line-height: 1.6;
-    font-weight: 300;
+    font-weight: 400;
+    color: white;
 }
 
 /* ========================================
