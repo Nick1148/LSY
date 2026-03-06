@@ -1,5 +1,5 @@
 // ============================================
-// 사회적 배터리 잔량 - 메인 로직
+// 사회적 배터리 유형 - 메인 로직 (귀여운 버전)
 // ============================================
 
 const SocialBatteryTest = {
@@ -11,46 +11,46 @@ const SocialBatteryTest = {
         {
             text: '금요일 퇴근 후, 친구에게서\n"오늘 술 한잔?" 연락이 왔다.',
             options: [
-                { text: '오 좋아! 어디로 갈까?', score: 20, label: '+20%' },
-                { text: '누구 오는데? 멤버 보고 결정', score: 5, label: '+5%' },
-                { text: '아... 오늘은 좀... (하지만 거절 못 함)', score: -10, label: '-10%' },
-                { text: '읽씹 후 넷플릭스 켬', score: -20, label: '-20%' }
+                { text: '오 좋아! 어디로 갈까?', score: 20 },
+                { text: '누구 오는데? 멤버 보고 결정', score: 5 },
+                { text: '아... 오늘은 좀... (하지만 거절 못 함)', score: -10 },
+                { text: '읽씹 후 넷플릭스 켬', score: -20 }
             ]
         },
         {
             text: '단톡방에 30개의\n안 읽은 메시지가 있다.',
             options: [
-                { text: '바로 확인하고 대화에 참여', score: 10, label: '+10%' },
-                { text: '슬쩍 읽고 중요한 것만 답장', score: 0, label: '±0%' },
-                { text: '나중에 읽어야지... (3일 후에도 안 읽음)', score: -15, label: '-15%' },
-                { text: '단톡방 알림 이미 꺼놨음', score: -25, label: '-25%' }
+                { text: '바로 확인하고 대화에 참여', score: 10 },
+                { text: '슬쩍 읽고 중요한 것만 답장', score: 0 },
+                { text: '나중에 읽어야지... (3일 후에도 안 읽음)', score: -15 },
+                { text: '단톡방 알림 이미 꺼놨음', score: -25 }
             ]
         },
         {
             text: '엘리베이터에서\n아는 사람을 마주쳤다.',
             options: [
-                { text: '반갑게 인사하고 근황 토크', score: 15, label: '+15%' },
-                { text: '가볍게 목인사 + 미소', score: 5, label: '+5%' },
-                { text: '핸드폰 보는 척', score: -10, label: '-10%' },
-                { text: '계단으로 간다', score: -30, label: '-30%' }
+                { text: '반갑게 인사하고 근황 토크', score: 15 },
+                { text: '가볍게 목인사 + 미소', score: 5 },
+                { text: '핸드폰 보는 척', score: -10 },
+                { text: '계단으로 간다', score: -30 }
             ]
         },
         {
             text: '회사/학교에서\n팀 프로젝트를 하게 됐다.',
             options: [
-                { text: '리더 자청! 역할 분배까지 함', score: 20, label: '+20%' },
-                { text: '주어진 역할은 잘 해내는 팀원', score: 5, label: '+5%' },
-                { text: '혼자 할 수 있는 파트 선택', score: -5, label: '-5%' },
-                { text: '왜 굳이 팀으로... (내면의 비명)', score: -20, label: '-20%' }
+                { text: '리더 자청! 역할 분배까지 함', score: 20 },
+                { text: '주어진 역할은 잘 해내는 팀원', score: 5 },
+                { text: '혼자 할 수 있는 파트 선택', score: -5 },
+                { text: '왜 굳이 팀으로... (내면의 비명)', score: -20 }
             ]
         },
         {
             text: '오랜만에 만난 모임에서\n새로운 사람을 소개받았다.',
             options: [
-                { text: '먼저 말 걸고 인스타 교환', score: 15, label: '+15%' },
-                { text: '상대가 말 걸면 반응 좋게 대화', score: 5, label: '+5%' },
-                { text: '옆에서 듣고만 있다가 슬쩍 빠짐', score: -15, label: '-15%' },
-                { text: '화장실 간다고 하고 5분간 숨쉬기', score: -25, label: '-25%' }
+                { text: '먼저 말 걸고 인스타 교환', score: 15 },
+                { text: '상대가 말 걸면 반응 좋게 대화', score: 5 },
+                { text: '옆에서 듣고만 있다가 슬쩍 빠짐', score: -15 },
+                { text: '화장실 간다고 하고 5분간 숨쉬기', score: -25 }
             ]
         }
     ],
@@ -58,83 +58,83 @@ const SocialBatteryTest = {
     results: {
         full: {
             range: [80, 100],
-            name: '완충 소셜킹',
-            emoji: '⚡',
-            icon: '⚡',
-            color: '#10b981',
+            name: '에너지 만렙 인싸요정',
+            emoji: '✨',
+            icon: '✨',
+            color: '#6EE7B7',
             levelClass: 'level-100',
-            description: '사람 만나는 게 충전! 약속 없는 주말이 더 불안한 타입. 에너지가 넘쳐서 주변 사람들까지 충전시켜 줍니다.',
+            description: '사람 만나는 게 곧 충전! 약속 없는 주말이 더 불안한 타입이에요. 넘치는 에너지로 주변 사람들까지 행복하게 만들어주는 당신!',
             chargeMethods: [
-                { emoji: '🎉', title: '대규모 모임 참석', text: '사람이 많을수록 더 신남' },
+                { emoji: '🎉', title: '대규모 모임 참석', text: '사람이 많을수록 더 신나!' },
                 { emoji: '📱', title: '새로운 사람과 연락', text: '인맥 확장이 취미' },
                 { emoji: '🎤', title: '노래방/파티', text: '소리 지르면서 에너지 UP' }
             ],
-            goodMatch: '⚡ 완충 소셜킹 (에너지 시너지!)',
-            badMatch: '💀 방전 히키코모리 (이해 불가)'
+            goodMatch: '✨ 에너지 만렙 인싸요정',
+            badMatch: '🐿️ 이불 속 겨울잠 다람쥐'
         },
         good: {
             range: [60, 79],
-            name: '양호한 사교인',
-            emoji: '🔋',
-            icon: '🔋',
-            color: '#34d399',
+            name: '센스쟁이 사교댕댕이',
+            emoji: '🐶',
+            icon: '🐶',
+            color: '#86EFAC',
             levelClass: 'level-80',
-            description: '적당히 만나고 적당히 쉬는 밸런스형. 사회생활도 잘하지만 혼자만의 시간도 소중히 여기는 건강한 타입.',
+            description: '적당히 만나고 적당히 쉬는 완벽 밸런서! 사회생활도 잘하지만 혼자만의 시간도 소중히 여기는 건강한 타입이에요.',
             chargeMethods: [
                 { emoji: '☕', title: '소수 친한 친구와 카페', text: '2~3명이 딱 좋아' },
                 { emoji: '🎬', title: '같이 영화 보기', text: '옆에 있지만 각자의 시간' },
                 { emoji: '🚶', title: '산책하며 대화', text: '부담 없는 가벼운 만남' }
             ],
-            goodMatch: '🪫 절전모드 사회인 (서로 존중)',
-            badMatch: '⚡ 완충 소셜킹 (너무 부담될 수 있음)'
+            goodMatch: '🐱 절전모드 고양이',
+            badMatch: '✨ 에너지 만렙 인싸요정'
         },
         saving: {
             range: [40, 59],
-            name: '절전모드 사회인',
-            emoji: '🪫',
-            icon: '🪫',
-            color: '#f59e0b',
+            name: '절전모드 고양이',
+            emoji: '🐱',
+            icon: '🐱',
+            color: '#FCD34D',
             levelClass: 'level-60',
-            description: '사회생활은 하지만 집이 최고. 약속 취소되면 내심 기뻐하는 타입. 에너지 관리가 중요합니다.',
+            description: '사회생활은 하지만 집이 최고! 약속 취소되면 내심 기뻐하는 타입이에요. 에너지 관리의 달인!',
             chargeMethods: [
                 { emoji: '🏠', title: '집에서 혼자 쉬기', text: '넷플릭스 + 배달이면 충전 완료' },
                 { emoji: '🎧', title: '음악 들으며 멍 때리기', text: '아무것도 안 하는 게 충전' },
                 { emoji: '🐱', title: '반려동물과 시간 보내기', text: '말 안 해도 되는 존재가 최고' }
             ],
-            goodMatch: '🔋 양호한 사교인 (적당한 거리감)',
-            badMatch: '⚡ 완충 소셜킹 (에너지 뱀파이어...)'
+            goodMatch: '🐶 센스쟁이 사교댕댕이',
+            badMatch: '✨ 에너지 만렙 인싸요정'
         },
         low: {
             range: [20, 39],
-            name: '저전력 경고',
-            emoji: '🔴',
-            icon: '🔴',
-            color: '#f97316',
+            name: '충전필요 곰돌이',
+            emoji: '🧸',
+            icon: '🧸',
+            color: '#FDBA74',
             levelClass: 'level-20',
-            description: '사회적 에너지 위험 수준! 충전이 시급합니다. 최소 3일은 혼자 시간이 필요한 상태.',
+            description: '사회적 에너지가 많이 소진된 상태! 충전이 시급해요. 최소 3일은 혼자만의 시간이 필요한 당신!',
             chargeMethods: [
                 { emoji: '🛏️', title: '이불 속 완전 격리', text: '최소 하루는 아무도 안 만나기' },
                 { emoji: '📵', title: '핸드폰 비행기 모드', text: '연락 차단이 최고의 충전' },
                 { emoji: '🍜', title: '혼밥/혼영', text: '혼자서 즐기는 시간' }
             ],
-            goodMatch: '🪫 절전모드 사회인 (서로의 공간 존중)',
-            badMatch: '⚡ 완충 소셜킹 (같이 있으면 방전 가속)'
+            goodMatch: '🐱 절전모드 고양이',
+            badMatch: '✨ 에너지 만렙 인싸요정'
         },
         dead: {
             range: [0, 19],
-            name: '방전 히키코모리',
-            emoji: '💀',
-            icon: '💀',
-            color: '#ef4444',
+            name: '이불 속 겨울잠 다람쥐',
+            emoji: '🐿️',
+            icon: '🐿️',
+            color: '#FCA5A5',
             levelClass: 'level-0',
-            description: '배터리 나감. 현재 사회와 연결 해제됨. 이불 속이 세상의 전부. 하지만 괜찮아요, 충전만 하면 됩니다.',
+            description: '배터리 방전! 현재 세상과 연결 해제 중이에요. 이불 속이 세상의 전부! 하지만 괜찮아요, 푹 쉬면 다시 충전될 거예요.',
             chargeMethods: [
                 { emoji: '🌙', title: '최소 일주일 완전 충전', text: '급한 연락 외 모두 거절' },
                 { emoji: '🎮', title: '게임/취미에 몰입', text: '좋아하는 것에 에너지 쏟기' },
                 { emoji: '😴', title: '낮잠의 왕이 되기', text: '자는 게 최고의 충전법' }
             ],
-            goodMatch: '💀 방전 히키코모리 (말 안 해도 통하는 사이)',
-            badMatch: '⚡ 완충 소셜킹 (다른 행성 사람)'
+            goodMatch: '🐿️ 이불 속 겨울잠 다람쥐',
+            badMatch: '✨ 에너지 만렙 인싸요정'
         }
     },
 
@@ -163,15 +163,11 @@ const SocialBatteryTest = {
                 <div class="question-number">Q${index + 1}</div>
                 <div class="question-text">${q.text.replace(/\n/g, '<br>')}</div>
                 <div class="options">
-                    ${q.options.map((opt, i) => {
-                        const cls = opt.score > 0 ? 'positive' : opt.score < 0 ? 'negative' : 'neutral';
-                        return `
-                            <button class="option-btn" data-index="${i}" data-score="${opt.score}">
-                                ${opt.text}
-                                <span class="battery-change ${cls}">🔋${opt.label}</span>
-                            </button>
-                        `;
-                    }).join('')}
+                    ${q.options.map((opt, i) => `
+                        <button class="option-btn" data-index="${i}" data-score="${opt.score}">
+                            ${opt.text}
+                        </button>
+                    `).join('')}
                 </div>
             </div>
         `;
@@ -212,7 +208,6 @@ const SocialBatteryTest = {
     },
 
     calculateResult() {
-        // 점수를 0~100 범위로 클램프
         const finalScore = Math.max(0, Math.min(100, this.score));
 
         let resultType;
@@ -236,9 +231,21 @@ const SocialBatteryTest = {
 
         const isLow = percent < 40;
 
+        // 유형 미리보기 그리드 생성
+        const allTypes = Object.values(this.results);
+        const teaserGrid = allTypes.map(t => {
+            const isCurrent = t.name === r.name;
+            return `
+                <div class="type-teaser-card ${isCurrent ? 'current' : ''}">
+                    <span class="teaser-emoji">${t.emoji}</span>
+                    <span class="teaser-name">${isCurrent ? t.name : '???'}</span>
+                </div>
+            `;
+        }).join('');
+
         resultArea.innerHTML = `
             <div class="result-container" id="resultCapture">
-                <div class="result-title">당신의 사회적 배터리는...</div>
+                <div class="result-title">당신의 사회적 배터리 유형은...</div>
 
                 <!-- 스마트폰 프레임 + 배터리 -->
                 <div class="phone-frame">
@@ -261,13 +268,13 @@ const SocialBatteryTest = {
 
                 ${isLow ? `
                     <div class="low-battery-warning">
-                        <p>⚠️ 배터리 부족 경고!<br>충전이 필요합니다. 아래 충전 방법을 참고하세요.</p>
+                        <p>충전이 필요해요! 🔌<br>아래 충전 방법을 참고해보세요.</p>
                     </div>
                 ` : ''}
 
                 <!-- 충전 방법 -->
                 <div class="charge-section">
-                    <h3>⚡ 나만의 충전 방법</h3>
+                    <h3>나만의 충전 방법 💝</h3>
                     ${r.chargeMethods.map(c => `
                         <div class="charge-card">
                             <span class="charge-emoji">${c.emoji}</span>
@@ -281,29 +288,49 @@ const SocialBatteryTest = {
 
                 <!-- 궁합 -->
                 <div class="match-section">
-                    <h4>🔌 배터리 궁합</h4>
+                    <h4>💕 배터리 궁합</h4>
                     <div class="match-item">
-                        <span class="match-icon">✅</span>
+                        <span class="match-icon">💖</span>
                         <span>잘 맞는 유형: ${r.goodMatch}</span>
                     </div>
                     <div class="match-item">
-                        <span class="match-icon">⚠️</span>
+                        <span class="match-icon">💔</span>
                         <span>주의할 유형: ${r.badMatch}</span>
                     </div>
                 </div>
             </div>
 
+            <!-- 바이럴 CTA -->
+            <div class="viral-cta">
+                <p class="viral-cta-title">💕 내 짝꿍은 어떤 유형일까?</p>
+                <p class="viral-cta-desc">
+                    나와 잘 맞는 유형: <strong>${r.goodMatch}</strong><br>
+                    친구나 연인의 유형이 궁금하다면?
+                </p>
+                <button class="viral-cta-btn" onclick="ShareManager.copyLink()">
+                    🔗 테스트 공유하기
+                </button>
+            </div>
+
+            <!-- 유형 미리보기 -->
+            <div class="type-teaser-section">
+                <h3>총 5가지 유형이 있어요!</h3>
+                <div class="type-teaser-grid">
+                    ${teaserGrid}
+                </div>
+            </div>
+
             <!-- 공유 -->
             <div class="share-section">
-                <p class="share-title">친구한테 공유하고 비교해봐!</p>
+                <p class="share-title">나는 ${r.emoji} ${r.name}이래! 너는 뭐야? 💕</p>
                 <div class="share-buttons">
-                    <button class="share-btn kakao" onclick="ShareManager.shareKakao('나의 사회적 배터리 잔량', '${r.emoji} ${r.name} (${percent}%) - ${r.description.substring(0, 40)}...', '', '')">
+                    <button class="share-btn kakao" onclick="ShareManager.shareKakao('나의 사회적 배터리 유형', '${r.emoji} ${r.name} - 나의 사회적 에너지 유형은? 너도 해봐! 💕', '', '')">
                         💬 카카오톡
                     </button>
                     <button class="share-btn copy-link" onclick="ShareManager.copyLink()">
                         🔗 링크 복사
                     </button>
-                    <button class="share-btn twitter" onclick="ShareManager.shareTwitter('나의 사회적 배터리: ${r.emoji} ${r.name} (${percent}%)! 당신의 배터리는? #찐테스트 #사회적배터리')">
+                    <button class="share-btn twitter" onclick="ShareManager.shareTwitter('나의 사회적 배터리 유형: ${r.emoji} ${r.name}! 너는 어떤 유형이야? 💕 #사회적배터리 #찐테스트')">
                         🐦 트위터
                     </button>
                     <button class="share-btn instagram" onclick="ShareManager.downloadResult('resultCapture', 'social-battery-result.png')">

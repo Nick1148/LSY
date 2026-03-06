@@ -71,8 +71,9 @@ const ShareManager = {
                 return;
             }
 
+            const bgColor = getComputedStyle(document.body).backgroundColor || '#0a0a0f';
             const canvas = await html2canvas(element, {
-                backgroundColor: '#0a0a0f',
+                backgroundColor: bgColor,
                 scale: 2,
                 useCORS: true
             });
