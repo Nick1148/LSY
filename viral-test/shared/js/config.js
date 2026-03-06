@@ -29,7 +29,7 @@ const SITE_CONFIG = {
             title: '나의 뇌 속 브라우저 탭',
             description: '당신의 뇌에는 지금 탭이 몇 개 열려있을까?',
             path: './brain-tabs/',
-            ogImage: './assets/og-brain-tabs.png',
+            ogImage: './assets/og-brain-tabs.svg',
             emoji: '🧠'
         },
         {
@@ -37,7 +37,7 @@ const SITE_CONFIG = {
             title: '나의 사회적 배터리 잔량',
             description: '당신의 사회적 배터리는 지금 몇 %?',
             path: './social-battery/',
-            ogImage: './assets/og-social-battery.png',
+            ogImage: './assets/og-social-battery.svg',
             emoji: '🔋'
         }
     ]
