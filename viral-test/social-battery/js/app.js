@@ -61,7 +61,7 @@ const SocialBatteryTest = {
             name: '에너지 만렙 인싸요정',
             emoji: '✨',
             icon: '✨',
-            color: '#6EE7B7',
+            color: '#B5EAD7',
             levelClass: 'level-100',
             description: '사람 만나는 게 곧 충전! 약속 없는 주말이 더 불안한 타입이에요. 넘치는 에너지로 주변 사람들까지 행복하게 만들어주는 당신!',
             chargeMethods: [
@@ -77,7 +77,7 @@ const SocialBatteryTest = {
             name: '센스쟁이 사교댕댕이',
             emoji: '🐶',
             icon: '🐶',
-            color: '#86EFAC',
+            color: '#C7CEEA',
             levelClass: 'level-80',
             description: '적당히 만나고 적당히 쉬는 완벽 밸런서! 사회생활도 잘하지만 혼자만의 시간도 소중히 여기는 건강한 타입이에요.',
             chargeMethods: [
@@ -93,7 +93,7 @@ const SocialBatteryTest = {
             name: '절전모드 고양이',
             emoji: '🐱',
             icon: '🐱',
-            color: '#FCD34D',
+            color: '#FFDAC1',
             levelClass: 'level-60',
             description: '사회생활은 하지만 집이 최고! 약속 취소되면 내심 기뻐하는 타입이에요. 에너지 관리의 달인!',
             chargeMethods: [
@@ -109,7 +109,7 @@ const SocialBatteryTest = {
             name: '충전필요 곰돌이',
             emoji: '🧸',
             icon: '🧸',
-            color: '#FDBA74',
+            color: '#FFB7B2',
             levelClass: 'level-20',
             description: '사회적 에너지가 많이 소진된 상태! 충전이 시급해요. 최소 3일은 혼자만의 시간이 필요한 당신!',
             chargeMethods: [
@@ -125,7 +125,7 @@ const SocialBatteryTest = {
             name: '이불 속 겨울잠 다람쥐',
             emoji: '🐿️',
             icon: '🐿️',
-            color: '#FCA5A5',
+            color: '#E2B6CF',
             levelClass: 'level-0',
             description: '배터리 방전! 현재 세상과 연결 해제 중이에요. 이불 속이 세상의 전부! 하지만 괜찮아요, 푹 쉬면 다시 충전될 거예요.',
             chargeMethods: [
@@ -186,6 +186,9 @@ const SocialBatteryTest = {
             b.style.pointerEvents = 'none';
         });
 
+        // 선택 시 미니 confetti
+        this.spawnConfetti(btn);
+
         this.score += score;
         this.answers.push(score);
 
@@ -195,7 +198,26 @@ const SocialBatteryTest = {
             } else {
                 this.showCalculating();
             }
-        }, 400);
+        }, 500);
+    },
+
+    spawnConfetti(btn) {
+        const emojis = ['✨', '💖', '⭐', '💕', '🌟'];
+        for (let i = 0; i < 5; i++) {
+            const span = document.createElement('span');
+            span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            span.style.cssText = `
+                position: absolute;
+                font-size: ${0.6 + Math.random() * 0.6}rem;
+                left: ${20 + Math.random() * 60}%;
+                top: ${20 + Math.random() * 60}%;
+                pointer-events: none;
+                z-index: 10;
+                animation: confettiPop 0.6s ease-out forwards;
+            `;
+            btn.appendChild(span);
+            setTimeout(() => span.remove(), 700);
+        }
     },
 
     showCalculating() {
@@ -204,7 +226,37 @@ const SocialBatteryTest = {
         document.getElementById('calcScreen').classList.add('active');
         document.getElementById('progressFill').style.width = '100%';
 
-        setTimeout(() => this.showResult(), 2000);
+        const calcText = document.querySelector('.calc-text');
+        const calcChar = document.getElementById('calcChar');
+        const calcProgress = document.getElementById('calcProgress');
+
+        const stages = [
+            { msg: '배터리 잔량 측정 중... 🔋', char: '🔋', pct: 25 },
+            { msg: '사회적 에너지 분석 중... 💫', char: '💫', pct: 50 },
+            { msg: '충전 방법 찾는 중... ⚡', char: '⚡', pct: 75 },
+            { msg: '결과 생성 중... ✨', char: '✨', pct: 95 }
+        ];
+        let stageIndex = 0;
+
+        // 첫 번째 스테이지
+        if (calcProgress) calcProgress.style.width = stages[0].pct + '%';
+
+        const stageInterval = setInterval(() => {
+            stageIndex++;
+            if (stageIndex < stages.length) {
+                calcText.textContent = stages[stageIndex].msg;
+                if (calcChar) calcChar.textContent = stages[stageIndex].char;
+                if (calcProgress) calcProgress.style.width = stages[stageIndex].pct + '%';
+            } else {
+                clearInterval(stageInterval);
+            }
+        }, 600);
+
+        setTimeout(() => {
+            clearInterval(stageInterval);
+            if (calcProgress) calcProgress.style.width = '100%';
+            this.showResult();
+        }, 2500);
     },
 
     calculateResult() {
@@ -291,11 +343,17 @@ const SocialBatteryTest = {
                     <h4>💕 배터리 궁합</h4>
                     <div class="match-item">
                         <span class="match-icon">💖</span>
-                        <span>잘 맞는 유형: ${r.goodMatch}</span>
+                        <div class="match-info">
+                            <div class="match-label">잘 맞는 유형</div>
+                            <div class="match-name">${r.goodMatch}</div>
+                        </div>
                     </div>
                     <div class="match-item">
                         <span class="match-icon">💔</span>
-                        <span>주의할 유형: ${r.badMatch}</span>
+                        <div class="match-info">
+                            <div class="match-label">주의할 유형</div>
+                            <div class="match-name">${r.badMatch}</div>
+                        </div>
                     </div>
                 </div>
             </div>

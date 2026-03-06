@@ -207,10 +207,12 @@ const BrainTabsTest = {
         const btn = e.currentTarget;
         const type = btn.dataset.type;
 
-        // 선택 애니메이션
         btn.classList.add('selected');
         const allBtns = btn.parentElement.querySelectorAll('.option-btn');
         allBtns.forEach(b => { b.style.pointerEvents = 'none'; });
+
+        // 선택 confetti
+        this.spawnConfetti(btn);
 
         this.answers.push(type);
 
@@ -220,7 +222,26 @@ const BrainTabsTest = {
             } else {
                 this.showCalculating();
             }
-        }, 400);
+        }, 500);
+    },
+
+    spawnConfetti(btn) {
+        const emojis = ['✨', '🧠', '⭐', '💭', '🌟'];
+        for (let i = 0; i < 5; i++) {
+            const span = document.createElement('span');
+            span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            span.style.cssText = `
+                position: absolute;
+                font-size: ${0.6 + Math.random() * 0.6}rem;
+                left: ${20 + Math.random() * 60}%;
+                top: ${20 + Math.random() * 60}%;
+                pointer-events: none;
+                z-index: 10;
+                animation: confettiPop 0.6s ease-out forwards;
+            `;
+            btn.appendChild(span);
+            setTimeout(() => span.remove(), 700);
+        }
     },
 
     showCalculating() {
@@ -228,12 +249,38 @@ const BrainTabsTest = {
         document.getElementById('progressContainer').style.display = 'none';
         document.getElementById('calcScreen').classList.add('active');
 
-        // 프로그레스 100%
         document.getElementById('progressFill').style.width = '100%';
 
+        const calcText = document.querySelector('.calc-text');
+        const calcChar = document.getElementById('calcChar');
+        const calcProgress = document.getElementById('calcProgress');
+
+        const stages = [
+            { msg: '뇌 스캔 중... 🧠', char: '🧠', pct: 25 },
+            { msg: '열린 탭 세는 중... 📑', char: '📑', pct: 50 },
+            { msg: 'RAM 사용량 분석 중... 💻', char: '💻', pct: 75 },
+            { msg: '결과 생성 중... ✨', char: '✨', pct: 95 }
+        ];
+        let stageIndex = 0;
+
+        if (calcProgress) calcProgress.style.width = stages[0].pct + '%';
+
+        const stageInterval = setInterval(() => {
+            stageIndex++;
+            if (stageIndex < stages.length) {
+                calcText.textContent = stages[stageIndex].msg;
+                if (calcChar) calcChar.textContent = stages[stageIndex].char;
+                if (calcProgress) calcProgress.style.width = stages[stageIndex].pct + '%';
+            } else {
+                clearInterval(stageInterval);
+            }
+        }, 600);
+
         setTimeout(() => {
+            clearInterval(stageInterval);
+            if (calcProgress) calcProgress.style.width = '100%';
             this.showResult();
-        }, 2000);
+        }, 2500);
     },
 
     calculateResult() {
@@ -324,7 +371,7 @@ const BrainTabsTest = {
                         <div class="ram-usage">
                             <div class="ram-label">
                                 <span>🖥️ RAM 사용량</span>
-                                <span>${r.ram}%</span>
+                                <span>${r.ram}% <span class="ram-emoji">${r.ram >= 80 ? '🤯' : r.ram >= 50 ? '😅' : r.ram >= 30 ? '😌' : '😴'}</span></span>
                             </div>
                             <div class="ram-bar">
                                 <div class="ram-fill ${r.ramClass}" id="ramFill" style="width: 0%"></div>
@@ -388,10 +435,36 @@ const BrainTabsTest = {
         setTimeout(() => {
             const ramFill = document.getElementById('ramFill');
             if (ramFill) ramFill.style.width = r.ram + '%';
+
+            // RAM 과부하 시 파티클 효과
+            if (r.ram >= 80) {
+                this.spawnRamParticles();
+            }
         }, 500);
 
         // 광고 초기화
         AdManager.init();
+    },
+
+    spawnRamParticles() {
+        const ramBar = document.querySelector('.ram-usage');
+        if (!ramBar) return;
+        ramBar.style.position = 'relative';
+
+        const particles = ['💨', '🔥', '💥', '⚡', '💢'];
+        let count = 0;
+        const interval = setInterval(() => {
+            if (count >= 8) { clearInterval(interval); return; }
+            const span = document.createElement('span');
+            span.className = 'ram-particle';
+            span.textContent = particles[Math.floor(Math.random() * particles.length)];
+            span.style.left = (20 + Math.random() * 60) + '%';
+            span.style.top = '-5px';
+            span.style.setProperty('--drift', (Math.random() * 20 - 10) + 'px');
+            ramBar.appendChild(span);
+            setTimeout(() => span.remove(), 1500);
+            count++;
+        }, 300);
     }
 };
 
