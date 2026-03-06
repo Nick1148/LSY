@@ -1,15 +1,15 @@
 /* ============================================
-   뇌 속 브라우저 탭 - 전용 스타일
+   뇌 속 브라우저 탭 - 전용 스타일 (파스텔 테마)
    ============================================ */
 
 /* === 결과: 브라우저 탭 UI === */
 .browser-window {
-    background: #1e1e2e;
-    border-radius: 12px;
+    background: #FFFFFF;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 40px rgba(192, 132, 252, 0.1);
     margin: 24px 0;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(192, 132, 252, 0.15);
 }
 
 /* 브라우저 상단 바 */
@@ -17,8 +17,8 @@
     display: flex;
     align-items: center;
     padding: 10px 14px;
-    background: #2a2a3e;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: #FFF5F7;
+    border-bottom: 1px solid rgba(192, 132, 252, 0.1);
 }
 
 .browser-dots {
@@ -33,9 +33,9 @@
     border-radius: 50%;
 }
 
-.browser-dot.red { background: #ff5f57; }
-.browser-dot.yellow { background: #ffbd2e; }
-.browser-dot.green { background: #28c940; }
+.browser-dot.red { background: #FCA5A5; }
+.browser-dot.yellow { background: #FDE68A; }
+.browser-dot.green { background: #6EE7B7; }
 
 .browser-title-text {
     font-size: 0.75rem;
@@ -50,7 +50,7 @@
     flex-wrap: wrap;
     gap: 2px;
     padding: 6px 6px 0;
-    background: #252538;
+    background: #FFF0F3;
     overflow: hidden;
 }
 
@@ -59,7 +59,7 @@
     align-items: center;
     gap: 6px;
     padding: 8px 12px;
-    background: #1e1e2e;
+    background: #FFFFFF;
     border-radius: 8px 8px 0 0;
     font-size: 0.7rem;
     color: var(--text-secondary);
@@ -67,16 +67,16 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(192, 132, 252, 0.08);
     border-bottom: none;
     animation: tabAppear 0.3s ease forwards;
     opacity: 0;
 }
 
 .tab-item.active-tab {
-    background: #2a2a3e;
+    background: #FFF5F7;
     color: var(--text-primary);
-    border-color: rgba(168, 85, 247, 0.3);
+    border-color: rgba(249, 168, 212, 0.3);
 }
 
 .tab-item .tab-favicon {
@@ -105,7 +105,7 @@
 /* 브라우저 콘텐츠 영역 */
 .browser-content {
     padding: 24px 20px;
-    background: #1e1e2e;
+    background: #FFFFFF;
     text-align: center;
 }
 
@@ -114,7 +114,7 @@
     align-items: center;
     gap: 8px;
     padding: 8px 14px;
-    background: #14141e;
+    background: #FFF0F3;
     border-radius: 20px;
     margin-bottom: 20px;
     font-size: 0.75rem;
@@ -143,8 +143,8 @@
 .ram-usage {
     margin-top: 20px;
     padding: 16px;
-    background: #14141e;
-    border-radius: 10px;
+    background: #FFF0F3;
+    border-radius: 12px;
 }
 
 .ram-label {
@@ -157,7 +157,7 @@
 
 .ram-bar {
     height: 8px;
-    background: #2a2a3e;
+    background: rgba(192, 132, 252, 0.1);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -168,9 +168,9 @@
     transition: width 1.5s ease;
 }
 
-.ram-fill.high { background: linear-gradient(90deg, #ef4444, #f97316); }
-.ram-fill.medium { background: linear-gradient(90deg, #f59e0b, #eab308); }
-.ram-fill.low { background: linear-gradient(90deg, #10b981, #06b6d4); }
+.ram-fill.high { background: linear-gradient(90deg, #FCA5A5, #FDBA74); }
+.ram-fill.medium { background: linear-gradient(90deg, #FDE68A, #FCD34D); }
+.ram-fill.low { background: linear-gradient(90deg, #6EE7B7, #67E8F9); }
 
 /* 결과 특성 태그 */
 .trait-tags {
@@ -183,8 +183,8 @@
 
 .trait-tag {
     padding: 6px 14px;
-    background: rgba(168, 85, 247, 0.12);
-    border: 1px solid rgba(168, 85, 247, 0.25);
+    background: rgba(192, 132, 252, 0.08);
+    border: 1px solid rgba(192, 132, 252, 0.2);
     border-radius: 20px;
     font-size: 0.8rem;
     color: var(--neon-purple);
@@ -220,7 +220,7 @@
     padding: 20px;
     background: var(--bg-secondary);
     border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(249, 168, 212, 0.12);
 }
 
 .compatibility h4 {
