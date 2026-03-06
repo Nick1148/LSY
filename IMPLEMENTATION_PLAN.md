@@ -1,11 +1,51 @@
-# 한국 로컬 MCP 서버 허브 - 구현 계획서
+# 한국 로컬 MCP 서버 허브 - 구현 계획서 (v2 - 전략 수정)
+
+## 전략 변경 사항
+
+### 기존 전략 (v1)
+> 모든 한국 MCP 서버를 직접 개발
+
+### 수정 전략 (v2)
+> **한국판 Smithery.ai** = 허브 플랫폼 + 빈틈 서버 개발
+
+### 왜 수정했나?
+이미 한국 MCP 서버들이 존재:
+- **KiMCP**: 네이버 검색 + 카카오맵 + TMAP (가장 포괄적)
+- **mcp-server-naver-search**: 네이버 쇼핑/카페/뉴스/블로그
+- **data-go-mcp-servers**: 공공데이터 (국민연금, 사업자등록 등)
+- **naver-finance-crawl-mcp**: 한국 주식 시세
+- **building-register-mcp**: 건축물대장
+
+→ 개별 서버 개발 = 레드오션
+→ **허브 플랫폼 + 빈틈 서버** = 블루오션
+
+---
+
+## 아직 없는 MCP 서버 (Gap 분석)
+
+| 분야 | 기존 서버 | 빈틈 (우리가 만들 것) |
+|------|----------|-------------------|
+| 검색 | KiMCP, naver-search | ✅ 있음 |
+| 지도 | KiMCP (카카오맵) | 네이버 지도 (길찾기 포함) |
+| 공공데이터 | data-go-mcp-servers | ✅ 일부 있음 |
+| 금융 | naver-finance-crawl | ✅ 있음 |
+| **택배 조회** | ❌ 없음 | **@korea-mcp/delivery** |
+| **한국어 맞춤법** | ❌ 없음 | **@korea-mcp/korean-lang** |
+| **배달음식** | ❌ 없음 | (Phase 2) |
+| **병원/약국** | ❌ 없음 | (Phase 2) |
+| **학교/교육** | ❌ 없음 | (Phase 3) |
+
+---
 
 ## 프로젝트 개요
 
-- **프로젝트명**: korea-mcp-hub (가칭)
-- **목표**: 한국 로컬 서비스(네이버, 카카오, 공공데이터 등)를 AI 에이전트가 사용할 수 있게 MCP 서버로 제공
-- **개발자**: 1인 (클로드코드 활용)
-- **기술 스택**: TypeScript + @modelcontextprotocol/sdk
+- **프로젝트명**: korea-mcp-hub
+- **포지션**: 한국 MCP 서버 허브 플랫폼 (한국판 Smithery.ai)
+- **핵심 가치**:
+  1. 한국 MCP 서버 카탈로그 (기존 + 우리 서버)
+  2. 한국어 설치 가이드
+  3. 빈틈 서버 직접 개발
+- **기술 스택**: TypeScript, Next.js 15, @modelcontextprotocol/sdk
 
 ---
 
@@ -13,64 +53,49 @@
 
 ```
 korea-mcp-hub/
+├── apps/
+│   └── web/                     # 허브 웹사이트 (Next.js 15)
+│       ├── app/
+│       │   ├── layout.tsx
+│       │   ├── page.tsx         # 메인 페이지
+│       │   ├── servers/
+│       │   │   ├── page.tsx     # 서버 카탈로그
+│       │   │   └── [slug]/
+│       │   │       └── page.tsx # 서버 상세 페이지
+│       │   └── guide/
+│       │       └── page.tsx     # 설치 가이드
+│       ├── components/
+│       ├── data/
+│       │   └── servers.ts       # 서버 메타데이터 (우리 서버 + 커뮤니티)
+│       └── package.json
+│
 ├── packages/
-│   ├── naver-search/          # 네이버 검색 MCP 서버
+│   ├── delivery/                # 택배 조회 MCP (우리 오리지널)
 │   │   ├── src/
-│   │   │   ├── index.ts       # 진입점
-│   │   │   ├── tools/         # MCP Tools 정의
-│   │   │   │   ├── web-search.ts
-│   │   │   │   ├── news-search.ts
-│   │   │   │   ├── blog-search.ts
-│   │   │   │   └── shopping-search.ts
-│   │   │   └── utils/
-│   │   │       └── naver-api.ts  # 네이버 API 클라이언트
+│   │   │   ├── index.ts
+│   │   │   └── tools/
+│   │   │       ├── track.ts     # 택배 배송 조회
+│   │   │       └── carriers.ts  # 택배사 목록
 │   │   ├── package.json
-│   │   ├── tsconfig.json
 │   │   └── README.md
 │   │
-│   ├── naver-map/             # 네이버 지도 MCP 서버
+│   ├── korean-lang/             # 한국어 도구 MCP (우리 오리지널)
 │   │   ├── src/
 │   │   │   ├── index.ts
 │   │   │   └── tools/
-│   │   │       ├── place-search.ts
-│   │   │       ├── directions.ts
-│   │   │       └── geocoding.ts
-│   │   └── package.json
+│   │   │       ├── spell-check.ts    # 맞춤법 검사
+│   │   │       └── translate.ts      # 한영/영한 번역
+│   │   ├── package.json
+│   │   └── README.md
 │   │
-│   ├── kakao-map/             # 카카오맵 MCP 서버
-│   │   ├── src/
-│   │   │   ├── index.ts
-│   │   │   └── tools/
-│   │   │       ├── place-search.ts
-│   │   │       ├── keyword-search.ts
-│   │   │       └── category-search.ts
-│   │   └── package.json
-│   │
-│   ├── public-data/           # 공공데이터 MCP 서버
-│   │   ├── src/
-│   │   │   ├── index.ts
-│   │   │   └── tools/
-│   │   │       ├── weather.ts        # 기상청 날씨
-│   │   │       ├── transit.ts        # 대중교통
-│   │   │       ├── business-reg.ts   # 사업자등록 확인
-│   │   │       └── real-estate.ts    # 부동산 실거래가
-│   │   └── package.json
-│   │
-│   └── shared/                # 공유 유틸리티
+│   └── shared/                  # 공유 유틸리티
 │       ├── src/
-│       │   ├── api-client.ts  # HTTP 클라이언트 래퍼
-│       │   ├── error.ts       # 에러 핸들링
-│       │   └── types.ts       # 공용 타입
+│       │   ├── api-client.ts
+│       │   └── types.ts
 │       └── package.json
 │
-├── apps/
-│   └── hub-web/               # 허브 웹사이트 (Phase 3)
-│       ├── app/
-│       ├── components/
-│       └── package.json
-│
-├── package.json               # 루트 (워크스페이스)
-├── turbo.json                 # Turborepo 설정
+├── package.json                 # 루트 (워크스페이스)
+├── turbo.json
 ├── tsconfig.base.json
 └── README.md
 ```
@@ -79,209 +104,39 @@ korea-mcp-hub/
 
 ## Phase 1: MVP (Week 1~2)
 
-### Week 1: 프로젝트 셋업 + 네이버 검색 MCP
+### Week 1: 허브 웹사이트 + 택배 MCP 서버
 
-#### Day 1-2: 프로젝트 초기 셋업
-```bash
-# 1. 새 레포 생성
-mkdir korea-mcp-hub && cd korea-mcp-hub
-git init
+#### Day 1-2: 프로젝트 셋업 + 허브 웹사이트
+- Monorepo 구조 (npm workspaces + turborepo)
+- Next.js 15 허브 웹사이트
+- 서버 카탈로그 (기존 한국 MCP 서버 10개+ 수록)
+- 각 서버별 설치 가이드 (한국어)
 
-# 2. Monorepo 설정 (npm workspaces + turborepo)
-npm init -y
-npm install -D turbo typescript @types/node
+#### Day 3-4: 택배 조회 MCP 서버 개발
+- 우리만의 오리지널 서버 (경쟁 없음)
+- 주요 택배사 지원: CJ대한통운, 한진, 로젠, 우체국 등
+- Tools: `track_delivery`, `list_carriers`
 
-# 3. 첫 번째 패키지: @korea-mcp/naver-search
-mkdir -p packages/naver-search/src/tools
-```
+#### Day 5: 배포 + 마케팅
+- npm 배포 (@korea-mcp/delivery)
+- Vercel 배포 (hub 웹사이트)
+- GitHub 공개
+- GeekNews, 개발자 커뮤니티 공유
 
-#### Day 2-3: 네이버 검색 MCP 서버 개발
+### Week 2: 한국어 도구 MCP + 문서 강화
 
-**필요한 네이버 API 키:**
-- 네이버 개발자 센터 (https://developers.naver.com) 에서 발급
-- Client ID + Client Secret
+#### Day 6-7: 한국어 MCP 서버
+- 맞춤법 검사 (부산대 맞춤법 검사기 API)
+- 한영/영한 번역 (Papago API)
 
-**구현할 Tools:**
-
-| Tool 이름 | 설명 | 입력 파라미터 |
-|-----------|------|-------------|
-| `naver_web_search` | 네이버 웹 검색 | query, display(1-100), start, sort |
-| `naver_news_search` | 뉴스 검색 | query, display, start, sort |
-| `naver_blog_search` | 블로그 검색 | query, display, start, sort |
-| `naver_shopping_search` | 쇼핑 검색 | query, display, start, sort, filter |
-| `naver_image_search` | 이미지 검색 | query, display, start, sort, filter |
-
-**핵심 코드 구조:**
-```typescript
-// packages/naver-search/src/index.ts
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { z } from "zod";
-
-const server = new McpServer({
-  name: "@korea-mcp/naver-search",
-  version: "1.0.0",
-});
-
-// 웹 검색 Tool 등록
-server.tool(
-  "naver_web_search",
-  "네이버 웹 검색. 한국어 웹 콘텐츠를 검색합니다.",
-  {
-    query: z.string().describe("검색어"),
-    display: z.number().min(1).max(100).default(10).describe("결과 수"),
-    sort: z.enum(["sim", "date"]).default("sim").describe("정렬 (sim: 정확도, date: 날짜순)"),
-  },
-  async ({ query, display, sort }) => {
-    const results = await naverApi.search("webkr", { query, display, sort });
-    return {
-      content: [{ type: "text", text: JSON.stringify(results, null, 2) }],
-    };
-  }
-);
-
-// 서버 시작
-const transport = new StdioServerTransport();
-await server.connect(transport);
-```
-
-#### Day 4-5: 테스트 + npm 배포
-
-```bash
-# 빌드
-npm run build
-
-# 로컬 테스트 (Claude Desktop에서)
-# claude_desktop_config.json:
-{
-  "mcpServers": {
-    "naver-search": {
-      "command": "npx",
-      "args": ["@korea-mcp/naver-search"],
-      "env": {
-        "NAVER_CLIENT_ID": "your-id",
-        "NAVER_CLIENT_SECRET": "your-secret"
-      }
-    }
-  }
-}
-
-# npm 배포
-npm publish --access public
-```
-
-### Week 2: 공공데이터 MCP + 문서화
-
-#### Day 6-7: 기상청 날씨 MCP
-- 공공데이터포털 API 키 발급
-- 초단기실황, 단기예보 Tool 구현
-
-#### Day 8-9: 대중교통 MCP
-- 서울 버스/지하철 실시간 도착 정보
-- 전국 기차 시간표
-
-#### Day 10: 문서화 + GitHub 공개
-- README.md (한국어/영어)
-- 설치 가이드 (스크린샷 포함)
-- 블로그 포스트 작성
-- GitHub 레포 공개 + 스타 모으기
+#### Day 8-10: 문서 + 커뮤니티
+- 설치 가이드 상세화 (스크린샷)
+- 블로그 포스트: "AI에게 택배 조회를 시키는 방법"
+- Discord/오픈카톡 개설
 
 ---
 
-## Phase 2: 확장 (Week 3~4)
+## Phase 2~3: (이전 계획과 동일)
 
-### Week 3: 카카오 + 네이버 지도
-
-| 패키지 | 구현할 Tools |
-|--------|------------|
-| `@korea-mcp/kakao-map` | 키워드 검색, 카테고리 검색, 좌표→주소 변환 |
-| `@korea-mcp/naver-map` | 장소 검색, 길찾기(자동차/대중교통/도보), 지오코딩 |
-
-### Week 4: 허브 웹사이트 v1
-
-- Next.js 15 앱 생성
-- 서버 카탈로그 페이지 (현재 제공 중인 MCP 서버 목록)
-- 설치 가이드 (각 서버별 step-by-step)
-- 블로그 섹션 (MCP 소개, 활용 사례)
-- Vercel 배포
-
----
-
-## Phase 3: 수익화 (Week 5~8)
-
-### Week 5-6: 프리미엄 서버
-- `@korea-mcp/finance` (주식 시세, 환율, 금리)
-- `@korea-mcp/real-estate` (아파트 실거래가, 시세)
-- 이 서버들은 API 키 + 프록시 서버 방식으로 유료화
-
-### Week 7-8: 결제 + 관리 시스템
-- Supabase에 사용자/API키/사용량 테이블
-- Stripe 또는 토스페이먼츠 연동
-- API 프록시 서버 (사용량 카운트 + 제한)
-- 대시보드 (내 API 키, 사용량 차트)
-
----
-
-## 핵심 성공 지표 (KPI)
-
-| 기간 | GitHub Stars | npm Downloads/월 | 유료 사용자 | MRR |
-|------|-------------|-----------------|-----------|-----|
-| 1개월 | 100 | 500 | 0 | $0 |
-| 3개월 | 500 | 5,000 | 50 | $500 |
-| 6개월 | 2,000 | 20,000 | 200 | $2,500 |
-| 12개월 | 5,000 | 50,000 | 1,000 | $12,000 |
-
----
-
-## 마케팅 전략
-
-1. **Build in Public** - X(트위터), 블로그에 개발 과정 공유
-2. **한국 개발자 커뮤니티** - 카카오 오픈채팅, Discord, GeekNews
-3. **기술 블로그** - velog, Medium에 MCP 튜토리얼 연재
-4. **Smithery.ai 등록** - 글로벌 MCP 레지스트리에 등록
-5. **컨퍼런스** - if(kakao), DEVIEW, FEConf 등 발표 신청
-
----
-
-## 필요한 외부 API 키 목록
-
-| 서비스 | API 발급처 | 무료 한도 | 용도 |
-|--------|-----------|----------|------|
-| 네이버 검색 | developers.naver.com | 25,000건/일 | 검색 MCP |
-| 네이버 지도 | developers.naver.com | 무료 (개인) | 지도 MCP |
-| 카카오맵 | developers.kakao.com | 300,000건/일 | 카카오 MCP |
-| 공공데이터포털 | data.go.kr | 1,000건/일 | 공공 MCP |
-| 기상청 | data.go.kr | 10,000건/일 | 날씨 MCP |
-| 한국거래소 | data.krx.co.kr | 무제한 | 금융 MCP |
-
----
-
-## 리스크 & 대응
-
-| 리스크 | 대응 방안 |
-|--------|---------|
-| API 사용 제한 초과 | 캐싱 레이어 추가, Rate limiting |
-| 네이버/카카오 API 변경 | 버전 관리, 자동 테스트 |
-| 경쟁자 등장 | 빠른 선점 + 커뮤니티 구축으로 Lock-in |
-| MCP 프로토콜 변경 | 공식 SDK 사용으로 자동 대응 |
-| 수익화 실패 | 컨설팅/외주 개발로 수익 다각화 |
-
----
-
-## 바로 시작하기
-
-```bash
-# Step 1: 새 레포 생성
-mkdir korea-mcp-hub && cd korea-mcp-hub
-
-# Step 2: 클로드코드로 프로젝트 초기화
-claude "TypeScript monorepo 프로젝트를 셋업해줘.
-npm workspaces + turborepo 사용.
-첫 번째 패키지는 @korea-mcp/naver-search.
-MCP 공식 SDK를 사용하고, 네이버 검색 API를 연동해줘."
-
-# Step 3: 네이버 개발자 센터에서 API 키 발급
-# https://developers.naver.com/apps/#/register
-
-# Step 4: 개발 시작!
-```
+- Phase 2 (Week 3-4): 추가 Gap 서버 개발 + 웹사이트 고도화
+- Phase 3 (Week 5-8): 수익화 (프리미엄 서버 + 결제)

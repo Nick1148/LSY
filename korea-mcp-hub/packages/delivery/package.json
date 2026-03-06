@@ -1,0 +1,25 @@
+{
+  "name": "@korea-mcp/delivery",
+  "version": "0.1.0",
+  "description": "한국 택배 조회 MCP 서버 - CJ대한통운, 한진, 로젠, 우체국 등 배송 추적",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "korea-mcp-delivery": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "keywords": ["mcp", "korea", "delivery", "tracking", "택배", "배송조회"],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

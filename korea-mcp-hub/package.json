@@ -1,0 +1,19 @@
+{
+  "name": "korea-mcp-hub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "한국 로컬 MCP 서버 허브 - AI 에이전트를 위한 한국 서비스 연결 플랫폼",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  }
+}
