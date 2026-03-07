@@ -400,7 +400,7 @@ const SocialBatteryTest = {
             <!-- 다른 테스트 -->
             <div class="other-tests">
                 <h3>다른 테스트도 해보세요!</h3>
-                <a href="../brain-tabs/" class="test-link-card">
+                <a href="${window.location.pathname.includes('/social-battery/') ? '../brain-tabs/' : 'brain-tabs/'}" class="test-link-card">
                     <span class="emoji">🧠</span>
                     <span class="title">나의 뇌 속 브라우저 탭</span>
                     <span class="desc">당신의 뇌에는 지금 탭이 몇 개 열려있을까?</span>
