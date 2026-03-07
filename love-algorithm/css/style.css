@@ -1,42 +1,192 @@
 /* ============================================
-   나의 연애 알고리즘 - 전용 스타일 (매칭 앱 UI)
+   나의 연애 알고리즘 - 전용 스타일 (데이팅 앱 테마)
    ============================================ */
 
-/* ============================================
-   결과 캡처 카드
-   ============================================ */
-#resultCapture {
-    padding: 24px 16px;
-    background: linear-gradient(180deg, #FFF0F5, #FFE4EF);
+/* === 귀여운 테마 CSS 변수 오버라이드 === */
+.cute-theme {
+    --bg-primary: #FFF5F8;
+    --bg-secondary: #FFE8EF;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #FFF0F5;
+    --text-primary: #3D2B3D;
+    --text-secondary: #7B5E7B;
+    --text-muted: #B8A0B8;
+    --neon-purple: #C084FC;
+    --neon-pink: #F472B6;
+    --neon-blue: #93C5FD;
+    --neon-green: #6EE7B7;
+    --neon-yellow: #FDE68A;
+    --neon-red: #FCA5A5;
+    --neon-rose: #FB7185;
+    --gradient-main: linear-gradient(135deg, #F472B6, #C084FC);
+    --gradient-card: linear-gradient(145deg, #FFFFFF, #FFF0F5);
+    --shadow-glow: 0 4px 20px rgba(244, 114, 182, 0.15);
+    --shadow-card: 0 4px 16px rgba(244, 114, 182, 0.08);
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* 귀여운 테마 - 옵션 버튼 */
+.cute-theme .option-btn {
+    background: #FFFFFF;
+    border: 1.5px solid rgba(244, 114, 182, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(244, 114, 182, 0.06);
     position: relative;
     overflow: hidden;
 }
 
-#resultCapture::before {
-    content: '♡ ♥ ♡';
+.cute-theme .option-btn::before {
+    content: '';
     position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.7rem;
-    color: var(--neon-purple);
-    opacity: 0.3;
-    letter-spacing: 12px;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.05), rgba(192, 132, 252, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cute-theme .option-btn:hover {
+    background: #FFF0F5;
+    border-color: var(--neon-pink);
+    box-shadow: 0 4px 16px rgba(244, 114, 182, 0.18);
+    transform: translateY(-2px);
+}
+
+.cute-theme .option-btn:hover::before {
+    opacity: 1;
+}
+
+.cute-theme .option-btn.selected {
+    background: rgba(244, 114, 182, 0.1);
+    border-color: var(--neon-pink);
+    box-shadow: 0 4px 16px rgba(244, 114, 182, 0.2);
+    transform: scale(1.02);
+}
+
+.cute-theme .option-btn.selected::after {
+    content: '💘';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+}
+
+/* 귀여운 테마 - 질문 카드 */
+.cute-theme .question-card {
+    background: #FFFFFF;
+    border: 1.5px solid rgba(244, 114, 182, 0.1);
+    box-shadow: 0 4px 20px rgba(244, 114, 182, 0.06);
+    position: relative;
+}
+
+.cute-theme .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-main);
+    border-radius: 24px 24px 0 0;
+}
+
+/* 귀여운 테마 - 프로그레스 */
+.cute-theme .progress-container {
+    background: var(--bg-primary);
+}
+
+.cute-theme .progress-bar {
+    background: rgba(244, 114, 182, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.cute-theme .progress-fill {
+    position: relative;
+}
+
+.cute-theme .progress-fill::after {
+    content: '💘';
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6rem;
+    filter: drop-shadow(0 0 2px rgba(244, 114, 182, 0.5));
+}
+
+/* 귀여운 테마 - 시작 버튼 */
+.cute-theme .start-btn {
+    box-shadow: 0 4px 20px rgba(244, 114, 182, 0.3);
+    border-radius: 32px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cute-theme .start-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.15),
+        transparent
+    );
+    animation: btnShine 3s ease-in-out infinite;
+}
+
+@keyframes btnShine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.cute-theme .start-btn:hover {
+    box-shadow: 0 8px 30px rgba(244, 114, 182, 0.4);
+}
+
+/* 귀여운 테마 - 로딩 스피너 */
+.cute-theme .calc-spinner {
+    border-color: rgba(244, 114, 182, 0.2);
+    border-top-color: var(--neon-pink);
+}
+
+/* 귀여운 테마 - 토스트 */
+.cute-theme .toast {
+    background: #FFFFFF;
+    border-color: var(--neon-pink);
+    box-shadow: 0 4px 20px rgba(244, 114, 182, 0.2);
 }
 
 /* ============================================
-   매칭 앱 스타일 - 폰 프레임
+   스마트폰 프레임 - 데이팅 앱 스타일
    ============================================ */
 .phone-frame {
+    width: 260px;
+    margin: 0 auto 24px;
+    padding: 0;
     background: #FFFFFF;
     border-radius: 32px;
     overflow: hidden;
+    border: 3px solid rgba(244, 114, 182, 0.2);
     box-shadow:
-        0 16px 56px rgba(249, 168, 212, 0.15),
-        0 0 0 1px rgba(249, 168, 212, 0.1),
+        0 16px 56px rgba(244, 114, 182, 0.15),
+        0 0 0 1px rgba(244, 114, 182, 0.1),
         inset 0 0 0 2px rgba(255, 255, 255, 0.8);
-    margin: 24px 0;
-    position: relative;
+    animation: phoneAppear 0.6s ease-out;
+}
+
+@keyframes phoneAppear {
+    0% { transform: scale(0.9) translateY(20px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .phone-notch {
@@ -73,7 +223,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 14px 4px;
-    border-bottom: 1px solid rgba(249, 168, 212, 0.1);
+    border-bottom: 1px solid rgba(244, 114, 182, 0.1);
     margin-bottom: 16px;
 }
 
@@ -97,8 +247,8 @@
 }
 
 @keyframes statusPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(244, 114, 182, 0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(244, 114, 182, 0); }
 }
 
 /* ============================================
@@ -107,9 +257,9 @@
 .profile-card {
     text-align: center;
     padding: 20px 12px;
-    background: linear-gradient(180deg, rgba(249, 168, 212, 0.06), rgba(192, 132, 252, 0.06));
+    background: linear-gradient(180deg, rgba(244, 114, 182, 0.06), rgba(192, 132, 252, 0.06));
     border-radius: 24px;
-    border: 1px solid rgba(249, 168, 212, 0.08);
+    border: 1px solid rgba(244, 114, 182, 0.08);
     position: relative;
     overflow: hidden;
 }
@@ -118,13 +268,13 @@
     font-size: 4rem;
     line-height: 1;
     margin-bottom: 12px;
-    filter: drop-shadow(0 4px 8px rgba(249, 168, 212, 0.2));
+    filter: drop-shadow(0 4px 8px rgba(244, 114, 182, 0.2));
     animation: avatarFloat 3s ease-in-out infinite;
 }
 
 @keyframes avatarFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-6px) scale(1.05); }
 }
 
 .profile-name {
@@ -139,115 +289,116 @@
 }
 
 .profile-description {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--text-secondary);
     line-height: 1.7;
-    padding: 0 4px;
+    padding: 12px;
     margin-top: 16px;
+    background: rgba(244, 114, 182, 0.04);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(244, 114, 182, 0.08);
 }
 
 /* ============================================
-   매칭 퍼센트 미터
+   매칭 퍼센트 원형 인디케이터
    ============================================ */
-.match-meter {
-    padding: 16px;
-    background: linear-gradient(135deg, #FFF0F5, #F5F0FF);
-    border-radius: 16px;
-    margin-bottom: 4px;
-    border: 1px solid rgba(249, 168, 212, 0.08);
+.match-circle-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 8px 0;
 }
 
-.match-pct-display {
-    font-size: 3rem;
+.match-circle {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 6px;
+}
+
+.match-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.match-bg-ring {
+    fill: none;
+    stroke: rgba(244, 114, 182, 0.1);
+    stroke-width: 8;
+}
+
+.match-fill-ring {
+    fill: none;
+    stroke: #F472B6;
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 6px rgba(244, 114, 182, 0.4));
+}
+
+.match-pct-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.match-pct-num {
+    font-size: 2rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #F472B6, #C084FC, #F472B6);
-    background-size: 200% 200%;
+    background: linear-gradient(135deg, #F472B6, #C084FC);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    line-height: 1;
-    margin-bottom: 4px;
-    animation: gradientShift 3s ease-in-out infinite;
+    letter-spacing: -1px;
 }
 
-@keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+.match-pct-sign {
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #F472B6, #C084FC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.8;
+    margin-left: 1px;
 }
 
 .match-label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    font-weight: 500;
-    margin-bottom: 12px;
-}
-
-.match-bar {
-    height: 10px;
-    background: rgba(249, 168, 212, 0.1);
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-}
-
-.match-fill {
-    height: 100%;
-    border-radius: 5px;
-    background: linear-gradient(90deg, #F9A8D4, #C084FC);
-    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-/* 매칭 바 반짝임 효과 */
-.match-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.4),
-        transparent
-    );
-    animation: matchShine 2s ease-in-out infinite;
-}
-
-@keyframes matchShine {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(50%); }
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 /* ============================================
-   해시태그 traits 태그
+   해시태그 Traits
    ============================================ */
-.trait-tags {
+.phone-screen .trait-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
     justify-content: center;
-    margin-top: 20px;
-    padding: 0 4px;
+    gap: 6px;
+    margin-top: 16px;
+    padding-bottom: 8px;
 }
 
-.trait-tag {
-    padding: 8px 16px;
-    background: linear-gradient(135deg, rgba(249, 168, 212, 0.1), rgba(192, 132, 252, 0.1));
-    border: none;
-    border-radius: 24px;
-    font-size: 0.82rem;
-    color: var(--neon-purple);
+.phone-screen .trait-tag {
+    font-size: 0.72rem;
+    padding: 5px 12px;
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.08), rgba(192, 132, 252, 0.08));
+    border: 1px solid rgba(244, 114, 182, 0.12);
+    border-radius: 20px;
+    color: var(--neon-pink);
     font-weight: 600;
-    box-shadow: 0 2px 8px rgba(249, 168, 212, 0.08);
     transition: all 0.2s ease;
 }
 
-.trait-tag:hover {
+.phone-screen .trait-tag:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(249, 168, 212, 0.15);
+    box-shadow: 0 4px 12px rgba(244, 114, 182, 0.15);
 }
 
 /* ============================================
@@ -256,32 +407,95 @@
 .compatibility {
     margin-top: 24px;
     padding: 24px 20px;
-    background: linear-gradient(135deg, rgba(249, 168, 212, 0.06), rgba(192, 132, 252, 0.06));
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.04), rgba(192, 132, 252, 0.06));
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(249, 168, 212, 0.1);
+    border: 1px solid rgba(244, 114, 182, 0.12);
+    text-align: center;
+    animation: fadeSlideUp 0.6s ease-out 0.3s both;
 }
 
 .compatibility h4 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--text-primary);
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     font-weight: 700;
 }
 
 .compatibility .good-match,
 .compatibility .bad-match {
-    font-size: 0.95rem;
-    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    font-size: 0.9rem;
     color: var(--text-secondary);
-    padding: 10px 14px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: var(--radius-md);
-    line-height: 1.5;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: var(--radius-lg);
+    margin-bottom: 10px;
+    border: 1px solid rgba(244, 114, 182, 0.08);
+    transition: all 0.2s ease;
+    text-align: left;
 }
 
-.compatibility .good-match:last-child,
-.compatibility .bad-match:last-child {
+.compatibility .good-match:hover,
+.compatibility .bad-match:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(244, 114, 182, 0.08);
+}
+
+.compatibility .bad-match {
     margin-bottom: 0;
+}
+
+/* ============================================
+   결과 캡처용
+   ============================================ */
+#resultCapture {
+    padding: 24px 16px;
+    background: linear-gradient(180deg, #FFF5F8, #FFE8EF);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 결과 배경 하트 데코 */
+#resultCapture::before {
+    content: '♡ ♥ ♡';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    color: var(--neon-pink);
+    opacity: 0.25;
+    letter-spacing: 12px;
+}
+
+/* 결과 타이틀 */
+.cute-theme .result-title {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.cute-theme .result-type-name {
+    font-size: 1.8rem;
+    position: relative;
+    display: inline-block;
+}
+
+.cute-theme .result-description {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 16px 20px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(244, 114, 182, 0.06);
+    font-size: 0.95rem;
+    line-height: 1.8;
 }
 
 /* ============================================
@@ -289,49 +503,61 @@
    ============================================ */
 .heart-particle {
     position: absolute;
-    font-size: 0.8rem;
+    font-size: 1rem;
     pointer-events: none;
+    z-index: 10;
     animation: heartFloat 1.5s ease-out forwards;
-    opacity: 0;
 }
 
 @keyframes heartFloat {
-    0% { transform: translateY(0) scale(0.5); opacity: 0.9; }
-    50% { opacity: 0.6; }
-    100% { transform: translateY(-40px) translateX(var(--drift)) scale(0.2); opacity: 0; }
+    0% {
+        transform: translateY(0) scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-30px) translateX(var(--drift)) scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-60px) translateX(var(--drift)) scale(0.5);
+        opacity: 0;
+    }
 }
 
 /* ============================================
-   글래스모피즘 결과 카드
+   선택 시 confetti 효과
    ============================================ */
-#resultCapture .phone-frame {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+@keyframes confettiPop {
+    0% { transform: scale(0) rotate(0deg); opacity: 1; }
+    100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
 }
 
-.compatibility {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+.option-btn.selected .confetti {
+    position: absolute;
+    animation: confettiPop 0.6s ease-out forwards;
 }
 
-.compatibility .good-match,
-.compatibility .bad-match {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+/* 결과 요소 페이드 슬라이드 업 */
+@keyframes fadeSlideUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* ============================================
    다크모드 오버라이드
    ============================================ */
 [data-theme="dark"] .phone-frame {
-    background: #2A2438;
+    background: #2A2035;
+    border-color: rgba(244, 114, 182, 0.2);
     box-shadow:
         0 16px 56px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(212, 165, 255, 0.08);
+        0 0 0 1px rgba(244, 114, 182, 0.08);
 }
 
 [data-theme="dark"] .phone-notch {
@@ -339,51 +565,69 @@
 }
 
 [data-theme="dark"] .phone-screen {
-    background: #2A2438;
+    background: #2A2035;
 }
 
 [data-theme="dark"] .app-top-bar {
-    border-bottom-color: rgba(212, 165, 255, 0.08);
+    border-bottom-color: rgba(244, 114, 182, 0.15);
 }
 
 [data-theme="dark"] .profile-card {
-    background: linear-gradient(180deg, rgba(212, 165, 255, 0.06), rgba(255, 184, 217, 0.06));
-    border-color: rgba(212, 165, 255, 0.08);
+    background: linear-gradient(180deg, rgba(244, 114, 182, 0.06), rgba(192, 132, 252, 0.06));
+    border-color: rgba(244, 114, 182, 0.1);
 }
 
-[data-theme="dark"] .match-meter {
-    background: linear-gradient(135deg, #221D30, #2A2438);
-    border-color: rgba(212, 165, 255, 0.06);
+[data-theme="dark"] .profile-description {
+    background: rgba(42, 32, 53, 0.6);
+    border-color: rgba(244, 114, 182, 0.1);
+    color: var(--text-secondary);
 }
 
-[data-theme="dark"] .match-bar {
-    background: rgba(212, 165, 255, 0.08);
+[data-theme="dark"] .match-bg-ring {
+    stroke: rgba(244, 114, 182, 0.15);
 }
 
-[data-theme="dark"] .trait-tag {
-    background: linear-gradient(135deg, rgba(212, 165, 255, 0.1), rgba(255, 184, 217, 0.1));
-    color: var(--neon-purple);
+[data-theme="dark"] .phone-screen .trait-tag {
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.12), rgba(192, 132, 252, 0.12));
+    border-color: rgba(244, 114, 182, 0.2);
 }
 
 [data-theme="dark"] .compatibility {
-    background: rgba(42, 36, 56, 0.6);
-    border-color: rgba(255, 184, 217, 0.1);
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.06), rgba(192, 132, 252, 0.08));
+    border-color: rgba(244, 114, 182, 0.15);
 }
 
 [data-theme="dark"] .compatibility .good-match,
 [data-theme="dark"] .compatibility .bad-match {
-    background: rgba(42, 36, 56, 0.7);
+    background: rgba(42, 32, 53, 0.7);
+    border-color: rgba(244, 114, 182, 0.1);
 }
 
 [data-theme="dark"] #resultCapture {
-    background: linear-gradient(180deg, #1A1625, #221D30);
+    background: linear-gradient(180deg, #1A1425, #221830);
 }
 
-[data-theme="dark"] #resultCapture .phone-frame {
-    background: rgba(42, 36, 56, 0.85);
-    border-color: rgba(212, 165, 255, 0.1);
+[data-theme="dark"] .cute-theme .result-description {
+    background: rgba(42, 32, 53, 0.5);
+    border-color: rgba(244, 114, 182, 0.08);
 }
 
-[data-theme="dark"] .profile-description {
-    color: var(--text-secondary);
+[data-theme="dark"] .cute-theme .option-btn {
+    background: var(--bg-card);
+    border-color: rgba(244, 114, 182, 0.12);
+}
+
+[data-theme="dark"] .cute-theme .option-btn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--neon-pink);
+}
+
+[data-theme="dark"] .cute-theme .option-btn.selected {
+    background: rgba(244, 114, 182, 0.1);
+    border-color: var(--neon-pink);
+}
+
+[data-theme="dark"] .cute-theme .question-card {
+    background: var(--bg-card);
+    border-color: rgba(244, 114, 182, 0.1);
 }
