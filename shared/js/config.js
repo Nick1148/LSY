@@ -3,12 +3,12 @@
 // ============================================
 const SITE_CONFIG = {
     // 도메인 변경 시 이 값만 수정하면 됨
-    // GitHub Pages: 'https://username.github.io/LSY/viral-test'
+    // GitHub Pages: 'https://nick1148.github.io/LGI'
     // 커스텀 도메인: 'https://yourdomain.com'
     BASE_URL: '',  // 상대경로 사용을 위해 빈 문자열
 
     // OG 태그용 절대 URL (SNS 공유 시 필요)
-    OG_BASE_URL: 'https://nick1148.github.io/LSY/viral-test',
+    OG_BASE_URL: 'https://nick1148.github.io/LGI',
 
     // 카카오 SDK 키 (도메인 등록 후 활성화)
     KAKAO_APP_KEY: '',
